@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b9b2b2;
+        }
+        
+
+        .navbar .product-form{
+            background-image: url(milkyway-8190232_1280.webp);
+            padding: 1rem;
+            flex-wrap: wrap;
+            width: 100%;
+            display:grid ;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 5%;
+            gap: 20px;
+            
+        }
+
+        .product-form input {
+
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #7a6969;
+            border-radius: 4px;
+            width: 900px;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-form button {
+            background-color: #000000;
+            color: white;
+            border: 1px solid white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.5rem;
+           font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .product-form button:hover {
+            background-color: #cfc4c3;
+            color: #000000;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            /* transform: translateY(.9rem); */
+            transition: .6s;
+        }
+    
+
+        .container {
+            justify-content: space-around;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            justify-content: space-around;
+            border-radius: 8px;
+            border: 1px solid #555;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-bottom: 1px solid #555;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-card .product-info {
+            padding: 15px;
+        }
+
+        .product-card .product-info h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .product-card .product-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .product-card .product-info .price {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .product-card button {
+            margin: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .product-card button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="product-form">
+            <input type="text" id="imageUrlInput" placeholder="Image URL">
+            <input type="text" id="productNameInput" placeholder="Product Name">
+            <input type="number" id="productPriceInput" placeholder="Price">
+            <button onclick="addProduct()">Add Product</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="product-grid" id="productList"></div>
+    </div>
+
+    <script>
+        const productList = document.getElementById('productList');
+        const imageUrlInput = document.getElementById('imageUrlInput');
+        const productNameInput = document.getElementById('productNameInput');
+        const productPriceInput = document.getElementById('productPriceInput');
+
+        function addProduct() {
+            const imageUrl = imageUrlInput.value.trim();
+            const productName = productNameInput.value.trim();
+            const productPrice = productPriceInput.value.trim();
+
+            if (imageUrl && productName && productPrice) {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+
+                productCard.innerHTML = `
+                    <img src="${imageUrl}" alt="Product Image">
+                    <div class="product-info">
+                        <h3>${productName}</h3>
+                        <p class="price">$${productPrice}</p>
+                    </div>
+                    <button onclick="removeProduct(this)">Delete</button>
+                `;
+                productList.appendChild(productCard);
+
+                imageUrlInput.value = '';
+                productNameInput.value = '';
+                productPriceInput.value = '';
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+
+        function removeProduct(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+
+</html>
